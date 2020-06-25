@@ -1,13 +1,22 @@
 $(document).ready(function () {
+    var compressedImages = new Array();
+
     $(".image-upload").ImageResize({
         maxWidth: 800,
         onImageResized: function (imageData) {
-            $(".images").append($("<img/>", {
-                src: imageData
-            }));
+
         },
         onComplete: function (imageData, isCompleted, src) {
-
+            let imageId = src.attr("id");
+            compressedImages[imageId] = imageData;
+            let compressedImageDiv = $('#'+imageId+'Compressed');
+            compressedImageDiv.html($("<img/>", {
+                src: imageData,
+                height: 200,
+                class: 'd-block'
+            }));
+            compressedImageDiv.append("Original Image Size: " + Math.round(src[0].files[0].size / 1024) + " KB");
+            compressedImageDiv.append("<br>Compressed Blob Size: " + Math.round((new Blob([imageData])).size / 1024) + " KB");
         },
         onFailure: function (message) {
             alert(message);
@@ -17,6 +26,9 @@ $(document).ready(function () {
     var Kairos = {
         appId: null,
         appKey: null,
+        galleryName: "People",
+        threshold: 0.60,
+        maxNumResults: 4,
 
         setAppId: function(appId) {
             this.appId = appId;
@@ -36,7 +48,36 @@ $(document).ready(function () {
                 this.appKey = localStorage.getItem("kairos_app_key");
             return this.appKey;
         },
+        recognize: function(image, imageName, onFinished) {
+            var form = new FormData();
+            let blob = new Blob([image]);
+            form.append("image", blob, imageName);
+            form.append("gallery_name", this.galleryName);
+            form.append("threshold", this.threshold);
+            form.append("max_num_results", this.maxNumResults);
+        
+            var settings = {
+                "url": "https://api.kairos.com/recognize",
+                "method": "POST",
+                "timeout": 600000,
+                "headers": {
+                    "app_id": this.getAppId(),
+                    "app_key": this.getAppKey()
+                },
+                "processData": false,
+                "contentType": false,
+                "data": form
+            };
+        
+            $.ajax(settings).done(onFinished);
+        }
     };
+
+    $("#kairosRecognize").click(function() {
+        Kairos.recognize(compressedImages["kairosImageRecognize"], "photo", function(res) {
+            console.log(res);
+        });
+    });
 
     $("#kairosAppIdSet").click(function() {
         var appId = $("#inputKairosAppId").val();
@@ -57,31 +98,4 @@ $(document).ready(function () {
     $("#kairosAppKeyGet").click(function() {
         $("#inputKairosAppKey").val(Kairos.getAppKey());
     });
-    
-    var kairosRcognize = function() {
-        var form = new FormData();
-        form.append("image", fileInput.files[0], "/C:/Users/Imran Ziad/Desktop/ML/NTB/datasets/download (1).png");
-        form.append("gallery_name", "People");
-        form.append("threshold", "0.60");
-        form.append("max_num_results", "4");
-    
-        var settings = {
-            "url": "https://api.kairos.com/recognize",
-            "method": "POST",
-            "timeout": 0,
-            "headers": {
-                "Content-Type": "application/json",
-                "app_id": "05f64948",
-                "app_key": "7d5e55812ccd8393caaedf118dafd903"
-            },
-            "processData": false,
-            "mimeType": "multipart/form-data",
-            "contentType": false,
-            "data": form
-        };
-    
-        $.ajax(settings).done(function (response) {
-            console.log(response);
-        });
-    }
 });

@@ -34,17 +34,21 @@
           <h4 class="my-0 font-weight-normal">Kairos</h4>
         </div>
         <div class="card-body">
-          <form>
-
+          <form id="myform">
+            
+            <!-- 
+              Image upload group must include a div with id like "kairosImageRecognizeCompressed" to preview image
+              That id should be input id + "Compressed"
+            -->
             <div class="form-group row">
-              <label for="fileRecognize" class="col-sm-2 col-form-label">Recognize</label>
+              <label for="kairosImageRecognize" class="col-sm-2 col-form-label">Recognize</label>
               <div class="col-sm-8">
-                <input type="file" class="form-control-file image-upload" id="fileRecognize" accept=".jpg, .jpeg, .png">
+                <input type="file" class="form-control-file image-upload" id="kairosImageRecognize" accept=".jpg, .jpeg, .png">
               </div>
               <div class="col-sm-2">
-                <button type="button" class="btn btn-outline-primary">Test</button>
+                <button type="button" class="btn btn-outline-primary" id="kairosRecognize">Test</button>
               </div>
-              <div class="images"></div>
+              <div class="mx-auto text-center" id="kairosImageRecognizeCompressed"></div>
             </div>
 
             <div class="form-group row">
@@ -92,7 +96,7 @@
   </div>
 
   <!-- Bootstrap JS files -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   
