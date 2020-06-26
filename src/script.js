@@ -10,6 +10,16 @@ $(document).ready(function () {
             let imageId = src.attr("id");
             compressedImages[imageId] = imageData;
             let compressedImageDiv = $('#'+imageId+'Compressed');
+            compressedImageDiv.children(".img-body").html($("<img/>", {
+                src: imageData,
+                height: 200,
+                class: 'd-block'
+            }));
+            compressedImageDiv.children(".img-body")
+                .append("Original Image Size: " + Math.round(src[0].files[0].size / 1024) + " KB");
+            compressedImageDiv.children(".img-body")
+                .append("<br>Compressed Blob Size: " + Math.round((new Blob([imageData])).size / 1024) + " KB");
+            /*
             compressedImageDiv.html($("<img/>", {
                 src: imageData,
                 height: 200,
@@ -17,6 +27,7 @@ $(document).ready(function () {
             }));
             compressedImageDiv.append("Original Image Size: " + Math.round(src[0].files[0].size / 1024) + " KB");
             compressedImageDiv.append("<br>Compressed Blob Size: " + Math.round((new Blob([imageData])).size / 1024) + " KB");
+            */
         },
         onFailure: function (message) {
             alert(message);
@@ -28,7 +39,7 @@ $(document).ready(function () {
         appKey: null,
         galleryName: "People",
         threshold: 0.60,
-        maxNumResults: 4,
+        maxNumResults: 10,
 
         setAppId: function(appId) {
             this.appId = appId;
@@ -76,6 +87,13 @@ $(document).ready(function () {
     $("#kairosRecognize").click(function() {
         Kairos.recognize(compressedImages["kairosImageRecognize"], "photo", function(res) {
             console.log(res);
+            let compressedImageDiv = $('#kairosImageRecognizeCompressed');
+            var candidates = filterCandidates(res);
+            console.log(candidates);
+            compressedImageDiv.children(".img-res").html("Tags:")
+            candidates.forEach(p => {
+                compressedImageDiv.children(".img-res").append("<br>" + p.name + " (" + p.confidence + "),")
+            });
         });
     });
 
@@ -98,4 +116,35 @@ $(document).ready(function () {
     $("#kairosAppKeyGet").click(function() {
         $("#inputKairosAppKey").val(Kairos.getAppKey());
     });
+
+    var filterCandidates = function(data) {
+        let candidates = [];
+
+        // merge all the candidates in one list
+        data.images.forEach(image => {
+            if(image.candidates != null)
+                candidates = candidates.concat(image.candidates);
+        });
+        let result = candidates.map((item) => {
+            return item == null ? null : {
+                name: item['subject_id'],
+                confidence: item['confidence']
+            }
+        });
+
+        // sort in descending order by confidence
+        result.sort((a, b) => (a.confidence < b.confidence) ? 1 : -1);
+
+        // remove duplicates
+        result = result.filter((item, index, self) =>
+            index === self.findIndex(t => item.name === t.name)
+        );
+
+        console.log(result);
+        return result;
+    };
+
+    var res = JSON.parse('{"images":[{"candidates":[{"confidence":0.83689,"enrollment_timestamp":"20200622170329","face_id":"350923b485d64ce882b","subject_id":"Norway Prime Minister"},{"confidence":0.79485,"enrollment_timestamp":"20200622165729","face_id":"73eb5c74c2ff498693c","subject_id":"Norway Foreign Minister"},{"confidence":0.79485,"enrollment_timestamp":"20200622165738","face_id":"45652b30274c425691d","subject_id":"Norway Prime Minister"},{"confidence":0.77331,"enrollment_timestamp":"20200622164600","face_id":"cc2e7bc08f4f4c7e856","subject_id":"Norway Prime Minister"}],"transaction":{"confidence":0.83689,"enrollment_timestamp":"20200622170329","eyeDistance":32,"face_id":"350923b485d64ce882b","gallery_name":"People","height":74,"pitch":3,"quality":1.12743,"roll":5,"status":"success","subject_id":"Norway Prime Minister","topLeftX":539,"topLeftY":152,"width":55,"yaw":-3}},{"transaction":{"eyeDistance":29,"face_id":2,"gallery_name":"People","height":77,"message":"no match found","pitch":13,"quality":-0.24502,"roll":-6,"status":"failure","topLeftX":142,"topLeftY":101,"width":55,"yaw":15}}]}');
+
+    filterCandidates(res);
 });
