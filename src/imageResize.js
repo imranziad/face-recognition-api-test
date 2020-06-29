@@ -25,8 +25,6 @@
         });
 
         function handleFileSelect() {
-            console.log("Compressing image")
-
             //Check File API support
             if (window.File && window.FileList && window.FileReader) {
                 var files = event.target.files;
@@ -53,7 +51,7 @@
                             });
                         });
                     } else {
-                        reader.addEventListener("load", function(event) {
+                        reader.addEventListener("load", function(event) {                            
                             var file = event.target;
                             var fileData = file.result;
 

@@ -1,24 +1,27 @@
 $(document).ready(function () {
-    var compressedImages = new Array();
+    let compressedImage = null;
 
-    $(".image-upload").ImageResize({
+    $("#image-upload").ImageResize({
         maxWidth: 800,
         onImageResized: function (imageData) {
-
+            
         },
         onComplete: function (imageData, isCompleted, src) {
-            let imageId = src.attr("id");
-            compressedImages[imageId] = imageData;
-            let compressedImageDiv = $('#' + imageId + 'Compressed');
+            compressedImage = imageData;
+            let originalSize = Math.round(src[0].files[0].size / 1024);
+            let compressedSize = Math.round((new Blob([imageData])).size / 1024);
+            let shrinkPercentage = 100 - Math.round((compressedSize/originalSize)*100);
+
+            let compressedImageDiv = $('#image-upload-compressed');
             compressedImageDiv.children(".img-body").html($("<img/>", {
                 src: imageData,
-                height: 200,
-                class: 'd-block'
+                height: 200
             }));
-            compressedImageDiv.children(".img-body")
-                .append("Original Image Size: " + Math.round(src[0].files[0].size / 1024) + " KB");
-            compressedImageDiv.children(".img-body")
-                .append("<br>Compressed Blob Size: " + Math.round((new Blob([imageData])).size / 1024) + " KB");
+            compressedImageDiv.children(".img-desc").html("");
+            compressedImageDiv.children(".img-desc")
+                .append("Original Image Size: " + originalSize + " KB");
+            compressedImageDiv.children(".img-desc")
+                .append("<br>Compressed Blob Size: " + compressedSize + " KB" + " (-" + shrinkPercentage + "%)");
         },
         onFailure: function (message) {
             alert(message);
@@ -75,25 +78,30 @@ $(document).ready(function () {
         }
     };
 
-    $("#kairosRecognize").click(function () {
-        $('#kairosImageRecognizeCompressed').children(".img-res")
-            .html("Tags: Searching...");
+    $("#kairos-recognize-btn").click(function () {
+        $('#kairos-recognize').children(".response")
+            .html("Result: Searching...");
 
-        Kairos.recognize(compressedImages["kairosImageRecognize"], "photo", function (res) {
+        Kairos.recognize(compressedImage, "photo", function (res) {
             console.log(res);
-            let compressedImageDiv = $('#kairosImageRecognizeCompressed');
-            compressedImageDiv.children(".img-res").html("Tags:");
+            // get the Div that will display response
+            let responseDisplay = $('#kairos-recognize').children(".response");
+            responseDisplay.html("Result:");
 
+            // check for errors
             if (res.hasOwnProperty("Errors")) {
-                compressedImageDiv.children(".img-res").append('<br><span class="text-danger">' + res["Errors"][0]["Message"]+'</span>');
+                responseDisplay.append('<br><span class="text-danger">' + res["Errors"][0]["Message"]+'</span>');
             } else {
+                // filter candidates and show matches
                 var candidates = filterCandidates(res);
                 console.log(candidates);
                 candidates.forEach(p => {
-                    compressedImageDiv.children(".img-res").append("<br>" + p.name + " (" + p.confidence + "),")
+                    responseDisplay.append("<br>" + p.name + " (" + p.confidence + "),")
                 });
+
+                // in case no matches are found
                 if(candidates.length === 0)
-                    compressedImageDiv.children(".img-res").append("<br>No matches found");
+                    responseDisplay.append("<br>No matches found");
             }
         });
     });
