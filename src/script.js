@@ -75,33 +75,100 @@ $(document).ready(function () {
             };
 
             $.ajax(settings).done(onFinished);
+        },
+        enroll: function(image, imageName, subjectId, multipleFaces, onFinished) {
+            var form = new FormData();
+            let blob = new Blob([image]);
+            form.append("image", blob, imageName);
+            form.append("gallery_name", this.galleryName);
+            form.append("subject_id", subjectId);
+            form.append("multiple_faces", multipleFaces);
+
+            var settings = {
+                "url": "https://api.kairos.com/enroll",
+                "method": "POST",
+                "timeout": 600000,
+                "headers": {
+                    "app_id": this.getAppId(),
+                    "app_key": this.getAppKey()
+                },
+                "processData": false,
+                "contentType": false,
+                "data": form
+            };
+
+            $.ajax(settings).done(onFinished);
         }
+    };
+
+    $("#kairos-enroll-btn").click(function () {
+        $('#kairos-enroll').children(".response")
+            .html("Sending image to train...");
+
+        let tags = $('#kairos-enroll-tags').val().split(',');
+        console.log(tags);
+
+        tags.forEach(t => {
+            Kairos.enroll(compressedImage, "photo", t.trim(), true, function (res) {
+                console.log(res);
+                // get the Div that will display response
+                let responseDisplay = $('#kairos-enroll').children(".response");
+    
+                // check for errors
+                if (res.hasOwnProperty("Errors")) {
+                    responseDisplay.html('<br><span class="text-danger">Failed: ' + res["Errors"][0]["Message"]+'</span>');
+                } else {
+                    responseDisplay.html('<br><span class="text-success">Image training successful.</span>');
+                }
+            });
+        });        
+    });
+
+    window.kairosEnrollFunc = function(subjectId) {
+        $('#kairos-enroll').children(".response")
+            .html("Sending image to train...");
+
+        Kairos.enroll(compressedImage, "photo", subjectId.trim(), true, function (res) {
+            console.log(res);
+            // get the Div that will display response
+            let responseDisplay = $('#kairos-enroll').children(".response");
+
+            // check for errors
+            if (res.hasOwnProperty("Errors")) {
+                responseDisplay.html('<br><span class="text-danger">Failed: ' + res["Errors"][0]["Message"]+'</span>');
+            } else {
+                responseDisplay.html('<br><span class="text-success">Image training successful.</span>');
+            }
+        });
     };
 
     $("#kairos-recognize-btn").click(function () {
         $('#kairos-recognize').children(".response")
-            .html("Result: Searching...");
+            .html('<li class="list-group-item">Searching...</li>');
 
         Kairos.recognize(compressedImage, "photo", function (res) {
             console.log(res);
             // get the Div that will display response
             let responseDisplay = $('#kairos-recognize').children(".response");
-            responseDisplay.html("Result:");
+            responseDisplay.html('');
 
             // check for errors
             if (res.hasOwnProperty("Errors")) {
-                responseDisplay.append('<br><span class="text-danger">' + res["Errors"][0]["Message"]+'</span>');
+                responseDisplay.append('<li class="list-group-item list-group-item-danger">' + res["Errors"][0]["Message"]+'</li>');
             } else {
                 // filter candidates and show matches
                 var candidates = filterCandidates(res);
                 console.log(candidates);
                 candidates.forEach(p => {
-                    responseDisplay.append("<br>" + p.name + " (" + p.confidence + "),")
+                    responseDisplay
+                        .append('<li class="list-group-item">' + p.name + ' (' + p.confidence + ')'
+                        + ' <button type="button" class="btn btn-outline-primary btn-sm" onclick="kairosEnrollFunc(\''+ p.name + '\')">Accept</button>'
+                        + '</li>');
                 });
 
                 // in case no matches are found
                 if(candidates.length === 0)
-                    responseDisplay.append("<br>No matches found");
+                    responseDisplay.append('<li class="list-group-item">No matches found</li>');
             }
         });
     });

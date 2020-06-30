@@ -42,10 +42,10 @@
             -->
             <div class="form-group row">
               <label for="image-upload" class="col-sm-2 col-form-label">Upload Image</label>
-              <div class="col-sm-8">
+              <div class="col-sm-7">
                 <input type="file" class="form-control-file" id="image-upload" accept=".jpg, .jpeg, .png">
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <button type="button" class="btn btn-outline-secondary" id="image-upload-clear">Clear</button>
               </div>
               <div class="col-12" id="image-upload-compressed">
@@ -54,7 +54,7 @@
               </div>
             </div>
 
-            <div class="form-group row" id="kairos-recognize">
+            <div class="form-group row my-5" id="kairos-recognize">
               <label class="col-sm-2 col-form-label">Recognize</label>
               <div class="col-sm-3 input-group pt-1">
                 <label for="" class="col-form-label-sm px-2">Threshold</label>
@@ -64,24 +64,27 @@
                 <label for="" class="col-form-label-sm px-2">Max No Results</label>
                 <input type="text" class="form-control form-control-sm" id="kairos-recognize-max-results">
               </div>
-              <div class="col-sm-2"></div>
-              <div class="col-sm-2">
-                <button type="button" class="btn btn-outline-info submit-btn" id="kairos-recognize-btn">Test</button>
+              <div class="col-sm-1"></div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-outline-info" id="kairos-recognize-btn">Test</button>
+                <button type="button" class="btn btn-outline-secondary" id="kairos-recognize-clear-btn">Clear</button>
               </div>
-              <div class="col-12 response text-center"></div>
+              <ul class="list-group col-sm-6 text-center mx-auto response">
+              </ul>
             </div>
 
-            <div class="form-group row" id="kairos-enroll">
+            <div class="form-group row my-5" id="kairos-enroll">
               <label class="col-sm-2 col-form-label">Enroll</label>
               <div class="col-sm-6 input-group pt-1">
                 <label for="" class="col-form-label-sm px-2">Tags (,)</label>
                 <input type="text" class="form-control form-control-sm" id="kairos-enroll-tags">
               </div>
-              <div class="col-sm-2"></div>
-              <div class="col-sm-2">
-                <button type="button" class="btn btn-outline-primary submit-btn">Train</button>
+              <div class="col-sm-1"></div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-outline-primary" id="kairos-enroll-btn">Train</button>
+                <button type="button" class="btn btn-outline-secondary" id="kairos-enroll-clear-btn">Clear</button>
               </div>
-              <div class="col-12 response"></div>
+              <div class="col-12 response text-center"></div>
             </div>
 
             <div class="form-group-row">
@@ -90,10 +93,10 @@
 
             <div class="form-group row">
               <label for="inputKairosAppId" class="col-sm-2 col-form-label col-form-label-sm">App Id</label>
-              <div class="col-sm-8">
+              <div class="col-sm-7">
                 <input type="text" class="form-control form-control-sm" id="inputKairosAppId">
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <button type="button" class="btn btn-sm btn-outline-success" id="kairosAppIdSet">Set</button>
                 <button type="button" class="btn btn-sm btn-outline-primary" id="kairosAppIdGet">Lookup</button>
               </div>
@@ -101,10 +104,10 @@
 
             <div class="form-group row">
               <label for="inputKairosAppKey" class="col-sm-2 col-form-label col-form-label-sm">App Key</label>
-              <div class="col-sm-8">
+              <div class="col-sm-7">
                 <input type="text" class="form-control form-control-sm" id="inputKairosAppKey">
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <button type="button" class="btn btn-sm btn-outline-success" id="kairosAppKeySet">Set</button>
                 <button type="button" class="btn btn-sm btn-outline-primary" id="kairosAppKeyGet">Lookup</button>
               </div>
