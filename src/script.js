@@ -53,6 +53,15 @@ $(document).ready(function () {
                 this.appKey = localStorage.getItem("kairos_app_key");
             return this.appKey;
         },
+        setGallery: function (galleryName) {
+            this.galleryName = galleryName;
+            localStorage.setItem("kairos_gallery_name", galleryName);
+        },
+        getGallery: function () {
+            if (this.galleryName == null)
+                this.galleryName = localStorage.getItem("kairos_gallery_name");
+            return this.galleryName;
+        },
         recognize: function (image, imageName, onFinished) {
             if(image == null) {
                 alert("Image not found");
@@ -201,6 +210,16 @@ $(document).ready(function () {
 
     $("#kairosAppKeyGet").click(function () {
         $("#inputKairosAppKey").val(Kairos.getAppKey());
+    });
+
+    $("#kairosGallerySet").click(function () {
+        var gallery = $("#inputKairosGallery").val();
+        Kairos.setGallery(gallery);
+        $("#inputKairosGallery").val("");
+    });
+
+    $("#kairosGalleryGet").click(function () {
+        $("#inputKairosGallery").val(Kairos.getGallery());
     });
 
     window.clearKairosAll = function() {
