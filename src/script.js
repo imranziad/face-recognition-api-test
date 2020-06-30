@@ -105,7 +105,7 @@ $(document).ready(function () {
         $('#kairos-enroll').children(".response")
             .html('<div class="alert alert-info mt-3">Sending image for training...</div>');
 
-        let tags = $('#kairos-enroll-tags').val().split(',');
+        let tags = $('#kairos-enroll-tags').val().split(';');
         console.log(tags);
 
         tags.forEach(t => {
