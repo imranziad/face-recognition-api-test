@@ -31,7 +31,7 @@ $(document).ready(function () {
     var Kairos = {
         appId: null,
         appKey: null,
-        galleryName: "People",
+        galleryName: null,
         threshold: 0.51,
         maxNumResults: 10,
 
