@@ -71,7 +71,7 @@ $(document).ready(function () {
             var form = new FormData();
             let blob = new Blob([image]);
             form.append("image", blob, imageName);
-            form.append("gallery_name", this.galleryName);
+            form.append("gallery_name", this.getGallery());
             form.append("threshold", this.threshold);
             form.append("max_num_results", this.maxNumResults);
 
@@ -99,7 +99,7 @@ $(document).ready(function () {
             var form = new FormData();
             let blob = new Blob([image]);
             form.append("image", blob, imageName);
-            form.append("gallery_name", this.galleryName);
+            form.append("gallery_name", this.getGallery());
             form.append("subject_id", subjectId);
             form.append("multiple_faces", multipleFaces);
 
@@ -236,6 +236,7 @@ $(document).ready(function () {
     }
 
     window.clearKairosEnroll = function() {
+        $('#kairos-enroll-tags').val('');
         $('#kairos-enroll').children(".response").html("");
     }
 
