@@ -32,7 +32,7 @@ $(document).ready(function () {
         appId: null,
         appKey: null,
         galleryName: "People",
-        threshold: 0.60,
+        threshold: 0.51,
         maxNumResults: 10,
 
         setAppId: function (appId) {
