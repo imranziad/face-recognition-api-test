@@ -47,7 +47,7 @@
                 <input type="file" class="form-control-file" id="image-upload" accept=".jpg, .jpeg, .png">
               </div>
               <div class="col-sm-3">
-                <button type="button" class="btn btn-outline-secondary" id="image-upload-clear">Clear</button>
+                <button type="button" class="btn btn-outline-secondary" id="image-upload-clear" onclick="clearKairosAll()">Clear</button>
               </div>
               <div class="col-12" id="image-upload-compressed">
                 <div class="col-12 text-center img-body"></div>
@@ -62,7 +62,7 @@
                 <ul class="list-group col-sm-12 text-center mx-auto response"></ul>
                 <div class="col-sm-12 mt-3">
                   <button type="button" class="btn btn-outline-primary" id="kairos-recognize-btn">Recognize</button>
-                  <button type="button" class="btn btn-outline-secondary" id="kairos-recognize-clear-btn">Clear</button>
+                  <button type="button" class="btn btn-outline-secondary" id="kairos-recognize-clear-btn" onclick="clearKairosRecognize()">Clear</button>
                 </div>
               </div>
 
@@ -77,7 +77,7 @@
                 <div class="col-12 response text-center"></div>
                 <div class="col-sm-12 mt-3">
                   <button type="button" class="btn btn-outline-primary" id="kairos-enroll-btn">Enroll</button>
-                  <button type="button" class="btn btn-outline-secondary" id="kairos-enroll-clear-btn">Clear</button>
+                  <button type="button" class="btn btn-outline-secondary" id="kairos-enroll-clear-btn" onclick="clearKairosEnroll()">Clear</button>
                 </div>
               </div>
 

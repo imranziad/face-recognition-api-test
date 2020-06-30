@@ -54,6 +54,11 @@ $(document).ready(function () {
             return this.appKey;
         },
         recognize: function (image, imageName, onFinished) {
+            if(image == null) {
+                alert("Image not found");
+                return ;
+            }
+
             var form = new FormData();
             let blob = new Blob([image]);
             form.append("image", blob, imageName);
@@ -77,6 +82,11 @@ $(document).ready(function () {
             $.ajax(settings).done(onFinished);
         },
         enroll: function(image, imageName, subjectId, multipleFaces, onFinished) {
+            if(image == null) {
+                alert("Image not found");
+                return ;
+            }
+
             var form = new FormData();
             let blob = new Blob([image]);
             form.append("image", blob, imageName);
@@ -193,6 +203,23 @@ $(document).ready(function () {
         $("#inputKairosAppKey").val(Kairos.getAppKey());
     });
 
+    window.clearKairosAll = function() {
+        $('#image-upload-compressed').children('.img-body').html('');
+        $('#image-upload-compressed').children('.img-desc').html('');
+        $("#image-upload").val('')
+        clearKairosEnroll();
+        clearKairosRecognize();
+        compressedImage = null;
+    }
+
+    window.clearKairosRecognize = function() {
+        $('#kairos-recognize').children(".response").html("");
+    }
+
+    window.clearKairosEnroll = function() {
+        $('#kairos-enroll').children(".response").html("");
+    }
+
     var filterCandidates = function (data) {
         let candidates = [];
 
@@ -217,8 +244,4 @@ $(document).ready(function () {
         );
         return result;
     };
-
-    var res = JSON.parse('{"images":[{"candidates":[{"confidence":0.83689,"enrollment_timestamp":"20200622170329","face_id":"350923b485d64ce882b","subject_id":"Norway Prime Minister"},{"confidence":0.79485,"enrollment_timestamp":"20200622165729","face_id":"73eb5c74c2ff498693c","subject_id":"Norway Foreign Minister"},{"confidence":0.79485,"enrollment_timestamp":"20200622165738","face_id":"45652b30274c425691d","subject_id":"Norway Prime Minister"},{"confidence":0.77331,"enrollment_timestamp":"20200622164600","face_id":"cc2e7bc08f4f4c7e856","subject_id":"Norway Prime Minister"}],"transaction":{"confidence":0.83689,"enrollment_timestamp":"20200622170329","eyeDistance":32,"face_id":"350923b485d64ce882b","gallery_name":"People","height":74,"pitch":3,"quality":1.12743,"roll":5,"status":"success","subject_id":"Norway Prime Minister","topLeftX":539,"topLeftY":152,"width":55,"yaw":-3}},{"transaction":{"eyeDistance":29,"face_id":2,"gallery_name":"People","height":77,"message":"no match found","pitch":13,"quality":-0.24502,"roll":-6,"status":"failure","topLeftX":142,"topLeftY":101,"width":55,"yaw":15}}]}');
-
-    filterCandidates(res);
 });
