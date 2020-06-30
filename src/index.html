@@ -9,7 +9,8 @@
   <title>Face Recognition API Test</title>
 
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
   <!-- Custom styles -->
   <link href="style.css" rel="stylesheet">
@@ -35,7 +36,7 @@
         </div>
         <div class="card-body">
           <form id="myform">
-            
+
             <!-- 
               Image upload group must include a div with id like "kairosImageRecognizeCompressed" to preview image
               That id should be input id + "Compressed"
@@ -54,37 +55,32 @@
               </div>
             </div>
 
-            <div class="form-group row my-5" id="kairos-recognize">
-              <label class="col-sm-2 col-form-label">Recognize</label>
-              <div class="col-sm-3 input-group pt-1">
-                <label for="" class="col-form-label-sm px-2">Threshold</label>
-                <input type="text" class="form-control form-control-sm" id="kairos-recognize-threshold">
-              </div>
-              <div class="col-sm-3 input-group pt-1">
-                <label for="" class="col-form-label-sm px-2">Max No Results</label>
-                <input type="text" class="form-control form-control-sm" id="kairos-recognize-max-results">
-              </div>
-              <div class="col-sm-1"></div>
-              <div class="col-sm-3">
-                <button type="button" class="btn btn-outline-info" id="kairos-recognize-btn">Test</button>
-                <button type="button" class="btn btn-outline-secondary" id="kairos-recognize-clear-btn">Clear</button>
-              </div>
-              <ul class="list-group col-sm-6 text-center mx-auto response">
-              </ul>
-            </div>
+            <div class="form-group row">
 
-            <div class="form-group row my-5" id="kairos-enroll">
-              <label class="col-sm-2 col-form-label">Enroll</label>
-              <div class="col-sm-6 input-group pt-1">
-                <label for="" class="col-form-label-sm px-2">Tags (,)</label>
-                <input type="text" class="form-control form-control-sm" id="kairos-enroll-tags">
+              <div class="form-group col-sm-6 text-center" id="kairos-recognize">
+                <label class="col-sm-12 col-form-label"><strong>Recognize</strong></label>
+                <ul class="list-group col-sm-12 text-center mx-auto response"></ul>
+                <div class="col-sm-12 mt-3">
+                  <button type="button" class="btn btn-outline-primary" id="kairos-recognize-btn">Recognize</button>
+                  <button type="button" class="btn btn-outline-secondary" id="kairos-recognize-clear-btn">Clear</button>
+                </div>
               </div>
-              <div class="col-sm-1"></div>
-              <div class="col-sm-3">
-                <button type="button" class="btn btn-outline-primary" id="kairos-enroll-btn">Train</button>
-                <button type="button" class="btn btn-outline-secondary" id="kairos-enroll-clear-btn">Clear</button>
+
+              <div class="form-group col-sm-6 text-center" id="kairos-enroll">
+                <label class="col-sm-12 col-form-label"><strong>Enroll</strong></label>
+                <div class="col-sm-12 input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">Tags (,)</div>
+                  </div>
+                  <input type="text" class="form-control form-control" id="kairos-enroll-tags">
+                </div>
+                <div class="col-12 response text-center"></div>
+                <div class="col-sm-12 mt-3">
+                  <button type="button" class="btn btn-outline-primary" id="kairos-enroll-btn">Enroll</button>
+                  <button type="button" class="btn btn-outline-secondary" id="kairos-enroll-clear-btn">Clear</button>
+                </div>
               </div>
-              <div class="col-12 response text-center"></div>
+
             </div>
 
             <div class="form-group-row">
@@ -123,9 +119,13 @@
 
   <!-- Bootstrap JS files -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
+  </script>
+
   <!-- Custom JS files -->
   <script src="imageResize.js"></script>
   <script src="script.js"></script>

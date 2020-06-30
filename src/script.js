@@ -103,7 +103,7 @@ $(document).ready(function () {
 
     $("#kairos-enroll-btn").click(function () {
         $('#kairos-enroll').children(".response")
-            .html("Sending image to train...");
+            .html('<div class="alert alert-info mt-3">Sending image for training...</div>');
 
         let tags = $('#kairos-enroll-tags').val().split(',');
         console.log(tags);
@@ -116,9 +116,9 @@ $(document).ready(function () {
     
                 // check for errors
                 if (res.hasOwnProperty("Errors")) {
-                    responseDisplay.html('<br><span class="text-danger">Failed: ' + res["Errors"][0]["Message"]+'</span>');
+                    responseDisplay.html('<div class="alert alert-danger mt-3">Failed: ' + res["Errors"][0]["Message"]+'</div>');
                 } else {
-                    responseDisplay.html('<br><span class="text-success">Image training successful.</span>');
+                    responseDisplay.html('<div class="alert alert-success mt-3">Trained successfully.</div>');
                 }
             });
         });        
@@ -126,7 +126,7 @@ $(document).ready(function () {
 
     window.kairosEnrollFunc = function(subjectId) {
         $('#kairos-enroll').children(".response")
-            .html("Sending image to train...");
+            .html('<div class="alert alert-info mt-3">Sending image for training...</div>');
 
         Kairos.enroll(compressedImage, "photo", subjectId.trim(), true, function (res) {
             console.log(res);
@@ -135,9 +135,9 @@ $(document).ready(function () {
 
             // check for errors
             if (res.hasOwnProperty("Errors")) {
-                responseDisplay.html('<br><span class="text-danger">Failed: ' + res["Errors"][0]["Message"]+'</span>');
+                responseDisplay.html('<div class="alert alert-danger mt-3">Failed: ' + res["Errors"][0]["Message"]+'</div>');
             } else {
-                responseDisplay.html('<br><span class="text-success">Image training successful.</span>');
+                responseDisplay.html('<div class="alert alert-success mt-3">Trained successfully.</div>');
             }
         });
     };
